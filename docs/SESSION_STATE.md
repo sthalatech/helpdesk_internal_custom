@@ -78,3 +78,31 @@ https://github.com/sthalatech/helpdesk_internal_custom
 | Helpdesk User Internal | Yes | Basic agent role |
 | Helpdesk Manager Internal | Yes | Team manager role |
 | Helpdesk Admin Internal | Yes | Full admin access |
+
+---
+
+## Reference: Original Project Requirements
+
+This project implements a custom Frappe app for internal departmental helpdesk with:
+
+### Core Requirement
+Dual-role permission system where users have:
+- **AGENT VIEW**: Full agent permissions on tickets assigned to their team
+- **CUSTOMER VIEW**: Read-only permissions on tickets their team raised to other teams
+- **NO ACCESS**: Complete restriction on all other tickets
+- **ADMIN VIEW**: Global administrators can see and manage all tickets
+
+### Key Rules
+- One team per user (1:1 mapping)
+- Auto-detect originating team from ticket creator
+- Helpdesk Manager can assign tickets within own team only
+- No cross-team ticket transfers
+- Preserve out-of-the-box Frappe Helpdesk status transitions
+
+### Custom Fields Needed (Session 3)
+- `User.assigned_team` - Link to HD Team (mandatory)
+- `HD Ticket.originating_team` - Link to HD Team (auto-set, read-only)
+- `HD Ticket.assigned_team` - Link to HD Team (selectable)
+
+### Architecture Rule
+**NEVER modify Frappe Helpdesk files directly** - all customizations go in helpdesk_internal_custom app.
