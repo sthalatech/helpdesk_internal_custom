@@ -1,0 +1,16 @@
+[project]
+name = "helpdesk_internal_custom"
+authors = [
+    { name = "Sthalatech", email = "hello@sthalatech.com"}
+]
+description = "Custom app for internal departmental helpdesk with team-based permissions"
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "helpdesk_internal_custom"
