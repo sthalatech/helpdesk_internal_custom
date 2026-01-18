@@ -27,7 +27,7 @@ app_license = "AGPLv3"
 # ------------
 
 after_install = "helpdesk_internal_custom.install.after_install"
-# after_uninstall = "helpdesk_internal_custom.uninstall.after_uninstall"
+before_uninstall = "helpdesk_internal_custom.install.before_uninstall"
 
 # Fixtures
 # --------
