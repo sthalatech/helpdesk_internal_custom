@@ -247,3 +247,34 @@ def test_ticket_access():
             }
     
     return results
+
+@frappe.whitelist()
+def test_write_permission_detail():
+    """Detailed permission test"""
+    from helpdesk_internal_custom.permissions import hd_ticket_has_permission
+    
+    results = []
+    
+    # Test IT agent on ticket 7 (customer view - should be read-only)
+    ticket7 = frappe.get_doc("HD Ticket", "7")
+    results.append({
+        "ticket": "7",
+        "user": "it_agent@test.local",
+        "ticket_team": ticket7.agent_group,
+        "ticket_origin": ticket7.originating_team,
+        "read": hd_ticket_has_permission(ticket7, "read", "it_agent@test.local"),
+        "write": hd_ticket_has_permission(ticket7, "write", "it_agent@test.local")
+    })
+    
+    # Test IT agent on ticket 6 (agent view - should be full access)
+    ticket6 = frappe.get_doc("HD Ticket", "6")
+    results.append({
+        "ticket": "6",
+        "user": "it_agent@test.local",
+        "ticket_team": ticket6.agent_group,
+        "ticket_origin": ticket6.originating_team,
+        "read": hd_ticket_has_permission(ticket6, "read", "it_agent@test.local"),
+        "write": hd_ticket_has_permission(ticket6, "write", "it_agent@test.local")
+    })
+    
+    return results
