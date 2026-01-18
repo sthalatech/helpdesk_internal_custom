@@ -35,6 +35,7 @@ after_install = "helpdesk_internal_custom.install.after_install"
 fixtures = [
     {"dt": "Custom Field", "filters": [["module", "=", "Helpdesk Internal Custom"]]},
     {"dt": "Property Setter", "filters": [["module", "=", "Helpdesk Internal Custom"]]},
+    {"dt": "Role", "filters": [["name", "in", ["Helpdesk User Internal", "Helpdesk Manager Internal", "Helpdesk Admin Internal"]]]},
 ]
 
 # Override DocType methods
@@ -42,22 +43,22 @@ override_doctype_class = {
     # "HD Ticket": "helpdesk_internal_custom.overrides.ticket.CustomTicket",
 }
 
-# Permission query methods
+# Permission query methods - Override helpdesk's default permissions
 permission_query_conditions = {
-    # "HD Ticket": "helpdesk_internal_custom.permissions.get_permission_query_conditions"
+    "HD Ticket": "helpdesk_internal_custom.permissions.get_permission_query_conditions"
 }
 
 has_permission = {
-    # "HD Ticket": "helpdesk_internal_custom.permissions.has_permission"
+    "HD Ticket": "helpdesk_internal_custom.permissions.has_permission"
 }
 
-# Document event hooks
+# Document event hooks - Auto-set originating_team and validate assignments
 doc_events = {
-    # "HD Ticket": {
-    #     "before_insert": "helpdesk_internal_custom.overrides.ticket.before_insert",
-    #     "before_save": "helpdesk_internal_custom.overrides.ticket.before_save",
-    #     "validate": "helpdesk_internal_custom.overrides.ticket.validate"
-    # }
+    "HD Ticket": {
+        "before_insert": "helpdesk_internal_custom.overrides.ticket.before_insert",
+        "before_save": "helpdesk_internal_custom.overrides.ticket.before_save",
+        "validate": "helpdesk_internal_custom.overrides.ticket.validate"
+    }
 }
 
 # Scheduled Tasks
